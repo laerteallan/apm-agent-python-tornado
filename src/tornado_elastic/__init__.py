@@ -1,0 +1,115 @@
+import elasticapm
+import tornado
+from elasticapm.base import Client
+from elasticapm.utils import get_url_dict
+from tornado.web import RequestHandler
+
+
+def get_data_from_request(request):
+    url = '{}://{}{}'.format(request.protocol, request.host, request.uri)
+    data = {
+        "headers": dict(**request.headers),
+        "method": request.method,
+        "socket": {
+            "remote_address": request.remote_ip,
+            "encrypted": request.protocol == 'https'
+        },
+        "cookies": dict(**request.cookies),
+        "url": get_url_dict(url),
+        "body": request.body
+    }
+
+    data["headers"].pop("Cookie", None)
+    return data
+
+
+def get_data_from_response(response):
+    data = {"status_code": response.get_status()}
+    if response._headers:
+        data["headers"] = response._headers._dict
+    return data
+
+
+def make_client(client_cls, app, **defaults):
+    config = app.settings.get('ELASTIC_APM', {})
+
+    if 'framework_name' not in defaults:
+        defaults['framework_name'] = 'tornado'
+        defaults['framework_version'] = getattr(tornado, '__version__', '<0.7')
+
+    client = client_cls(config, **defaults)
+    return client
+
+
+class TornadoApm(object):
+
+    def __validate_app(self, app):
+        if not app:
+            raise Exception("Handle tornado invalid")
+
+    def __init__(self, aplication=None, client=None, client_cls=Client):
+        self.__validate_app(aplication)
+        self.client = client
+        self.client_cls = client_cls
+        self.__init_app(aplication)
+
+    def __init_app(self, app, **defaults):
+        self.app = app
+        if not self.client:
+            self.client = make_client(self.client_cls, app, **defaults)
+
+        if self.client.config.instrument:
+            elasticapm.instrumentation.control.instrument()
+            app.settings.update({"apm_elastic": self})
+
+    def capture_exception(self, *args, **kwargs):
+        assert self.client, 'capture_exception called before application configured'
+        return self.client.capture_exception(*args, **kwargs)
+
+    def capture_message(self, *args, **kwargs):
+        assert self.client, 'capture_message called before application configured'
+        return self.client.capture_message(*args, **kwargs)
+
+
+class ApiElasticHandlerAPM(RequestHandler):
+
+    def capture_exception(self):
+        apm_elastic = self.settings.get("apm_elastic")
+        apm_elastic.client.capture_exception(
+            context={
+                "request": get_data_from_request(self.request)
+            },
+            handled=False,
+        )
+
+    def capture_message(self, message_error):
+        apm_elastic = self.settings.get("apm_elastic")
+        apm_elastic.client.capture_message(message_error)
+
+    def get_url(self):
+        url = None
+        for router in self.application.wildcard_router.rules:
+            if router.target == self.__class__:
+                url = router.matcher._path
+                break
+        return url.replace("%s", "<param>")
+
+    def write_error(self, status_code, **kwargs):
+        self.capture_exception()
+
+    def prepare(self):
+        apm_elastic = self.settings.get("apm_elastic")
+        apm_elastic.client.begin_transaction("request")
+
+    def on_finish(self):
+        apm_elastic = self.settings.get("apm_elastic")
+        name_trasaction = '{} {}'.format(self.request.method, self.get_url())
+        status = self.get_status()
+        result = 'HTTP {}xx'.format(status // 100)
+        data_request = get_data_from_request(self.request)
+        data_response = get_data_from_response(self)
+        elasticapm.set_context(lambda: data_request, "request")
+        elasticapm.set_context(lambda: data_response, "response")
+        elasticapm.set_transaction_name(name_trasaction, override=False)
+        elasticapm.set_transaction_result(result, override=False)
+        apm_elastic.client.end_transaction()
