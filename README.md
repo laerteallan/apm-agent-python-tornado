@@ -19,8 +19,7 @@ This project has integrated with apm-agent of company Elastic Search. It
 
 ### Usage
 
->The file show a implmentation
-[main.py](main.py)
+>The [main.py](main.py) file show a implmentation
 
 ## Authors
 
