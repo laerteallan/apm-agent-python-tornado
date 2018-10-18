@@ -5,13 +5,13 @@ This project has integrated with apm-agent of company Elastic Search. It
 
 ### Prerequisites
 
-Agent apm of elastic search,
-tornado framework ,
-python 3.+
+- Agent apm of elastic search
+- Tornado framework
+- python 3.+
 
 ### Installing
-pip install  elastic-apm
-pip install tornado
+- pip install  elastic-apm
+- pip install tornado
 
 ##Execute test
 
@@ -19,8 +19,7 @@ pip install tornado
 
 ### Usage
 
->The file show a implmentation
-[main.py](main.py)
+>The [main.py](main.py) file show a implmentation
 
 ## Authors
 
