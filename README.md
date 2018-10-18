@@ -5,8 +5,8 @@ This project has integrated with apm-agent of company Elastic Search. It
 
 ### Prerequisites
 
-Agent apm of elastic search
-Framework tornado
+Agent apm of elastic search,
+tornado framework ,
 python 3.+
 
 ### Installing
