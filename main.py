@@ -30,12 +30,14 @@ class MainTest2(ApiElasticHandlerAPM):
 
 
 def make_app():
-    settings = {'ELASTIC_APM':
-                    {'SERVICE_NAME': 'Teste tornado',
-                     'SECRET_TOKEN': '',
-                     "Debug": False},
-                "compress_response": True,
-                }
+    settings = {
+        'ELASTIC_APM':
+            {
+                "SERVICE_NAME": "Teste tornado",
+                "SECRET_TOKEN": "",
+                "Debug": False},
+        "compress_response": True,
+    }
     application = tornado.web.Application([
         (r"/", MainTest1),
         (r"/error", MainTest2),
