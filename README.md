@@ -10,8 +10,8 @@ This project has integrated with apm-agent of company Elastic Search. It
 - python 3.+
 
 ### Installing
-pip install  elastic-apm
-pip install tornado
+- pip install  elastic-apm
+- pip install tornado
 
 ##Execute test
 
