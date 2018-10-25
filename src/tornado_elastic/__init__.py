@@ -48,6 +48,18 @@ class TornadoApm(object):
 
 class ApiElasticHandlerAPM(RequestHandler):
 
+    @staticmethod
+    def __parser_url(router):
+        group_index = sorted(list(router.matcher.regex.groupindex.values()))
+        tuple_url = ()
+        url = router.matcher._path
+        for param in group_index:
+            for key, value in router.matcher.regex.groupindex.items():
+                if value == param:
+                    tuple_url += (":" + key,)
+                    break
+        return url % tuple_url
+
     def capture_exception(self):
         apm_elastic = self.settings.get("apm_elastic")
         apm_elastic.client.capture_exception(
@@ -65,9 +77,9 @@ class ApiElasticHandlerAPM(RequestHandler):
         url = None
         for router in self.application.wildcard_router.rules:
             if router.target == self.__class__:
-                url = router.matcher._path
+                url = self.__parser_url(router)
                 break
-        return url.replace("%s", "<param>")
+        return url
 
     def write_error(self, status_code, **kwargs):
         self.capture_exception()
