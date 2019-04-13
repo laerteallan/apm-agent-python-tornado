@@ -18,8 +18,7 @@ This project has integrated with apm-agent of company Elastic Search. It
 
 ### Execute test
 
-> py.test tests
-> make tests
+- make tests
 
 ### Usage
 
