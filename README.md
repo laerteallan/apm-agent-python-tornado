@@ -12,6 +12,7 @@ This project has integrated with apm-agent of company Elastic Search. It
 ### Installing
 - pip install  elastic-apm
 - pip install tornado
+- python setup install
 
 ### Execute test
 
