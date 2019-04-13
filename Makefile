@@ -8,7 +8,7 @@ pep8:
 
 
 tests: clean pep8
-	py.test tests
+	py.test --cov=tornado_elastic tests
 
 tests-unit: clean pep8
 	py.test --cov=tornado_elastic tests/
