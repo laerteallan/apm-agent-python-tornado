@@ -11,10 +11,10 @@ tests: clean pep8
 	py.test tests
 
 tests-unit: clean pep8
-	py.test --cov=src tests/
+	py.test --cov=tornado_elastic tests/
 
 tests-with-coverage: clean pep8
-	py.test --cov=src --cov-report=xml tests
+	py.test --cov=tornado_elastic --cov-report=xml tests
 
 sonar: tests-with-coverage
 	sonar-scanner
