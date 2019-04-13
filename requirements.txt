@@ -1,0 +1,2 @@
+elastic-apm==3.0.1
+tornado==6.0.2
