@@ -4,7 +4,7 @@ clean:
 	rm -f coverage.xml
 
 pep8:
-	@find . -type f -not -path "*./.venv/*" -name "*.py"|xargs flake8 --max-line-length=130 --ignore=E402 --max-complexity=6
+	@find . -type f -not -name "*main.py*" -not -path "*./.venv/*" -name "*.py"|xargs flake8 --max-line-length=130 --ignore=E402 --max-complexity=6
 
 
 tests: clean pep8
