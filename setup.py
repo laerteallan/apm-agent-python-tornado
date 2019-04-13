@@ -38,7 +38,7 @@ setup(
     include_package_data=True,
     package_dir={here: 'tornado_elastic'},
     keywords='sample setuptools development',
-    packages=find_packages(here, exclude=['contrib', 'docs', 'tests', 'main.py']),
+    packages=find_packages(here, exclude=['contrib', 'docs', 'tests', 'main.py', 'requirements-dev.txt']),
     package_data={'tornado_elastic': ['*']},
     install_requires=reqs,  # Optional
 

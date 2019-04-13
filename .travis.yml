@@ -1,0 +1,15 @@
+language: python
+matrix:
+  include:
+  - name: "3.7.2 Unittest"
+    python: "3.7-dev"
+    env: TEST_SUITE=UNITTEST
+
+install:
+  - pip install -r requirements-dev.txt
+
+branches:
+  only:
+  - master
+
+script: make tests
