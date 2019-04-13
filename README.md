@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/laerteallan/apm-agent-python-tornado.svg?branch=master)](https://travis-ci.org/laerteallan/apm-agent-python-tornado)
+
 # Tornado apm -- Elastic APM agent for python/tornado  
 
 This project has integrated with apm-agent of company Elastic Search. It 
@@ -16,7 +18,7 @@ This project has integrated with apm-agent of company Elastic Search. It
 
 ### Execute test
 
-> py.test tests
+- make tests
 
 ### Usage
 
