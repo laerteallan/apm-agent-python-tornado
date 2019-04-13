@@ -1,6 +1,6 @@
 import mock
 
-from src.tornado_elastic import ApiElasticHandlerAPM
+from tornado_elastic import ApiElasticHandlerAPM
 from tests import BaseTestClass
 
 
@@ -65,7 +65,7 @@ class TestApiElasticHandlerAPM(BaseTestClass):
         url = handler.get_url()
         self.assertEqual(url, 'test/:operator/extref/:extref')
 
-    @mock.patch("src.tornado_elastic.elasticapm")
+    @mock.patch("tornado_elastic.elasticapm")
     def test_on_finish(self, mock_elastic):
         application = mock.MagicMock()
         client = mock.MagicMock()

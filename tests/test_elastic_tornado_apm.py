@@ -1,6 +1,6 @@
 import mock
 
-from src.tornado_elastic import TornadoApm
+from tornado_elastic import TornadoApm
 from tests import BaseTestClass
 
 
