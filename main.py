@@ -3,7 +3,7 @@ import tornado.ioloop
 import tornado.web
 from tornado.httpserver import HTTPServer
 
-from src.tornado_elastic import ApiElasticHandlerAPM, TornadoApm
+from tornado_elastic import ApiElasticHandlerAPM, TornadoApm
 
 
 class MainTest1(ApiElasticHandlerAPM):
