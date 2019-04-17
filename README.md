@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/laerteallan/apm-agent-python-tornado.svg?branch=master)](https://travis-ci.org/laerteallan/apm-agent-python-tornado)
 [![Coverage Status](https://coveralls.io/repos/github/laerteallan/apm-agent-python-tornado/badge.svg?branch=master)](https://coveralls.io/github/laerteallan/apm-agent-python-tornado?branch=master)
+[![Requirements Status](https://requires.io/github/laerteallan/apm-agent-python-tornado/requirements.svg?branch=master)](https://requires.io/github/laerteallan/apm-agent-python-tornado/requirements/?branch=master)
 
 # Tornado apm -- Elastic APM agent for python/tornado  
 
